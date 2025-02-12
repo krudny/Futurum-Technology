@@ -11,8 +11,8 @@ import lombok.*;
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long id;
+    private Long id;
 
     @NonNull
-    public String name;
+    private String name;
 }

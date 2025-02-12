@@ -14,8 +14,8 @@ public class Product {
     private Long id;
 
     @NonNull
-    public String name;
+    private String name;
 
     @OneToOne(optional = true, cascade = CascadeType.ALL)
-    public Campaign campaign;
+    private Campaign campaign;
 }

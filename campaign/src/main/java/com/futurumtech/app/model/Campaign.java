@@ -17,15 +17,15 @@ public class Campaign {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    public String name;
+    private String name;
 
-    public Integer bid;
+    private Integer bid;
 
-    public Integer fund;
+    private Integer fund;
 
-    public Status status;
+    private Status status;
 
-    public Integer radius;
+    private Integer radius;
 
     @OneToOne(mappedBy = "campaign")
     private Product product;
