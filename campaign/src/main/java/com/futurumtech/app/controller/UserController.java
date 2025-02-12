@@ -1,7 +1,8 @@
 package com.futurumtech.app.controller;
 
-import com.futurumtech.app.repository.UserRepository;
+import com.futurumtech.app.DTO.UpdateBalanceRequest;
 import com.futurumtech.app.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,8 @@ public class UserController {
     }
 
     @PutMapping("/balance")
-    public ResponseEntity<?> updateBalance(@RequestParam("userId") Long userId, @RequestParam("newBalance") int newBalance) {
-        userService.updateBalance(userId, newBalance);
+    public ResponseEntity<?> updateBalance(@Valid @RequestBody UpdateBalanceRequest updateBalanceRequest) {
+        userService.updateBalance(updateBalanceRequest);
 
         return ResponseEntity.ok("User balance updated successfully!");
     }

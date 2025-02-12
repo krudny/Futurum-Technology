@@ -1,5 +1,6 @@
 package com.futurumtech.app.service;
 
+import com.futurumtech.app.DTO.UpdateBalanceRequest;
 import com.futurumtech.app.model.User;
 import com.futurumtech.app.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -19,11 +20,10 @@ public class UserService {
         return user.getBalance();
     }
 
-    public void updateBalance(Long userId, int newBalance) {
-        User user = getUser(userId);
-        if (newBalance <= 0) {
-            throw new IllegalArgumentException("Balance cannot be less than 0!");
-        }
-        user.setBalance(newBalance);
+    public void updateBalance(UpdateBalanceRequest updateBalanceRequest) {
+        User user = getUser(updateBalanceRequest.getUserId());
+
+        user.setBalance(updateBalanceRequest.getNewBalance());
+        userRepository.save(user);
     }
 }
