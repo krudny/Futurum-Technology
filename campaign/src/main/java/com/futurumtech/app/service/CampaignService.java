@@ -63,5 +63,9 @@ public class CampaignService {
                 .orElseThrow(() -> new IllegalArgumentException("Such campaign does not exist!"));
     }
 
+    public void deleteCampaign(Long campaignId) {
+        campaignRepository.deleteById(campaignId);
+    }
+
 
 }
