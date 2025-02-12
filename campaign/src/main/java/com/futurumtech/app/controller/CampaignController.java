@@ -5,7 +5,6 @@ import com.futurumtech.app.model.Campaign;
 import com.futurumtech.app.service.CampaignService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,5 +26,12 @@ public class CampaignController {
         campaignService.addCampaign(request);
 
         return ResponseEntity.ok("Campaign added successfully!");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCampaign(@PathVariable Long id, @Valid @RequestBody CampaignRequest request) {
+        campaignService.updateCampaign(id, request);
+
+        return ResponseEntity.ok("Campaign updated successfully!");
     }
 }

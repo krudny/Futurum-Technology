@@ -15,25 +15,23 @@ import java.util.List;
 @AllArgsConstructor
 public class CampaignService {
     private final CampaignRepository campaignRepository;
-    private final ProductRepository productRepository;
+    private final StatusService statusService;
+    private final ProductService productService;
 
     public List<Campaign> getAllCampaigns() {
         return campaignRepository.findAll();
     }
 
-    public void addCampaign(CampaignRequest request) {
-        if (request.getBid() > request.getFund()) {
+    private void checkBid(int bid, int fund) {
+        if (bid > fund) {
             throw new IllegalArgumentException("Bid cannot be greater than fund!");
         }
+    }
 
-        Product product = productRepository.findById(request.getProductID()).orElseThrow(() -> new IllegalArgumentException("Such product does not exist!"));
-
-        Status status;
-        try {
-            status = Status.valueOf(request.getStatus());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid status");
-        }
+    public void addCampaign(CampaignRequest request) {
+        checkBid(request.getBid(), request.getFund());
+        Product product = productService.getProductById(request.getProductID());
+        Status status = statusService.getStatusFromString(request.getStatus());
 
         Campaign campaign = Campaign.builder()
                 .name(request.getName())
@@ -45,6 +43,24 @@ public class CampaignService {
                 .build();
 
         campaignRepository.save(campaign);
+    }
+
+    public void updateCampaign(Long campaignId, CampaignRequest request) {
+        checkBid(request.getBid(), request.getFund());
+        Product product = productService.getProductById(request.getProductID());
+        Status status = statusService.getStatusFromString(request.getStatus());
+
+        campaignRepository.findById(campaignId)
+                .map(campaign -> {
+                    campaign.setName(request.getName());
+                    campaign.setBid(request.getBid());
+                    campaign.setFund(request.getFund());
+                    campaign.setRadius(request.getRadius());
+                    campaign.setProduct(product);
+                    campaign.setStatus(status);
+                    return campaignRepository.save(campaign);
+                })
+                .orElseThrow(() -> new IllegalArgumentException("Such campaign does not exist!"));
     }
 
 

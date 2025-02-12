@@ -16,6 +16,10 @@ public class ProductService {
         return productRepository.findByName(name).isPresent();
     }
 
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Such product does not exist!"));
+    }
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
