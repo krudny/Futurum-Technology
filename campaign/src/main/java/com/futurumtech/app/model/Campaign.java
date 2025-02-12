@@ -3,6 +3,7 @@ package com.futurumtech.app.model;
 import com.futurumtech.app.model.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Campaign {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +23,7 @@ public class Campaign {
 
     public Integer fund;
 
-    public Status status = Status.INACTIVE;
+    public Status status;
 
     public Integer radius;
 

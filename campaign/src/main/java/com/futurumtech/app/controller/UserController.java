@@ -21,7 +21,6 @@ public class UserController {
     @PutMapping("/balance")
     public ResponseEntity<?> updateBalance(@Valid @RequestBody UpdateBalanceRequest updateBalanceRequest) {
         userService.updateBalance(updateBalanceRequest);
-
         return ResponseEntity.ok("User balance updated successfully!");
     }
 }
