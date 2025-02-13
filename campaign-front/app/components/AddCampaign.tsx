@@ -17,7 +17,12 @@ interface FormData {
   productID: string;
 }
 
-export default function AddCampaign({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
+interface DialogProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+export default function AddCampaign({ open, setOpen }: DialogProps) {
   const [formData, setFormData] = useState<FormData>({ name: "", bid: "", fund: "", status: "", radius: "", productID: "" });
   const [products, setProducts] = useState<Product[]>([]);
   const [statuses, setStatuses] = useState<string[]>([]);

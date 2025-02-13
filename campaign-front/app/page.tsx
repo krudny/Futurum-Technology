@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import AddProduct from "@/app/components/AddProduct";
 import AddCampaign from "@/app/components/AddCampaign";
+import CampaignList from "@/app/components/CampaignList";
 
 export default function Home() {
   const [openProductDialog, setOpenProductDialog] = useState(false);
@@ -47,6 +48,7 @@ export default function Home() {
 
       <AddProduct open={openProductDialog} setOpen={setOpenProductDialog} />
       <AddCampaign open={openCampaignDialog} setOpen={setOpenCampaignDialog} />
+      <CampaignList />
     </div>
   );
 }
