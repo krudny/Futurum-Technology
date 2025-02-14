@@ -5,9 +5,10 @@ import lombok.*;
 
 
 @Entity
-@RequiredArgsConstructor
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

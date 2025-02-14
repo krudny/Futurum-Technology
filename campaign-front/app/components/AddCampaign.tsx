@@ -13,12 +13,13 @@ import { useApplicationContext } from "@/app/utils/ApplicationContext";
 import {DialogProps, Field, FormData} from "@/app/interfaces/interfaces";
 
 export default function AddCampaign({ open, setOpen }: DialogProps) {
-  const {refreshProducts, refreshCampaigns, refreshBalance, products, statuses } = useApplicationContext();
+  const {refreshProducts, refreshCampaigns, refreshBalance, cities, products, statuses } = useApplicationContext();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     bid: "",
     fund: "",
     status: "",
+    city: "",
     radius: "",
     productID: "",
   });
@@ -81,6 +82,22 @@ export default function AddCampaign({ open, setOpen }: DialogProps) {
             <MenuItem key={index} value={status}>
               {status}
             </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+            select
+            label="City"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            required
+            fullWidth
+            margin="dense"
+        >
+          {cities.map((city, index) => (
+              <MenuItem key={index} value={city.name}>
+                {city.name}
+              </MenuItem>
           ))}
         </TextField>
 

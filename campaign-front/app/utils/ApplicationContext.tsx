@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Campaign, ApplicationContextType, FetchDataProps, Product } from "@/app/interfaces/interfaces";
+import {Campaign, ApplicationContextType, FetchDataProps, Product, City} from "@/app/interfaces/interfaces";
 import toast from "react-hot-toast";
 
 const ApplicationContext = createContext<ApplicationContextType | undefined>(undefined);
@@ -9,6 +9,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [statuses, setStatuses] = useState<string[]>([]);
   const [balance, setBalance] = useState(0);
+  const [cities, setCities] = useState<City[]>([])
 
   async function fetchData<T>({ url, setState, error_feedback }: FetchDataProps<T>): Promise<void> {
     try {
@@ -21,6 +22,10 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       toast.error(`Błąd podczas pobierania ${error_feedback}: ${error}`);
     }
+  }
+
+  async function refreshCities(): Promise<void> {
+    await fetchData<City[]>({ url: "city", setState: setCities, error_feedback: "miast" });
   }
 
   async function refreshCampaigns(): Promise<void> {
@@ -55,6 +60,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
     refreshProducts();
     refreshStatuses();
     refreshBalance();
+    refreshCities();
   }, []);
 
   return (
@@ -64,6 +70,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
             products,
             statuses,
             balance,
+            cities,
             fetchData,
             refreshCampaigns,
             refreshProducts,

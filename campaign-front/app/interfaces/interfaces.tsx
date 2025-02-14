@@ -1,5 +1,10 @@
 import {Dispatch, SetStateAction} from "react";
 
+export interface City {
+  id: number;
+  name: string;
+}
+
 export interface Campaign {
   id: number;
   name: string;
@@ -21,6 +26,7 @@ export interface ApplicationContextType {
   products: Product[];
   statuses: string[];
   balance: number;
+  cities: City[];
   fetchData: <T>(props: FetchDataProps<T>) => Promise<void>;
   refreshCampaigns: () => Promise<void>;
   refreshProducts: () => Promise<void>;
@@ -41,6 +47,7 @@ export interface FormData {
   fund: string;
   status: string;
   radius: string;
+  city: string;
   productID: string;
 }
 
