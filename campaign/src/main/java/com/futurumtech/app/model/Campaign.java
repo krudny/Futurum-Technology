@@ -1,6 +1,7 @@
 package com.futurumtech.app.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.futurumtech.app.model.enums.Keywords;
 import com.futurumtech.app.model.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,8 @@ public class Campaign {
     private Status status;
 
     private Integer radius;
+
+    private Keywords keyword;
 
     @ManyToOne
     @JoinColumn(name = "city_id")

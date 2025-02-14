@@ -5,7 +5,6 @@ import {
   FetchDataProps,
   Product,
   City,
-  Status,
 } from "@/app/interfaces/interfaces";
 import toast from "react-hot-toast";
 
@@ -19,6 +18,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
   const [statuses, setStatuses] = useState<string[]>([]);
   const [balance, setBalance] = useState(0);
   const [cities, setCities] = useState<City[]>([]);
+  const [keywords, setKeywords] = useState<string[]>([]);
 
   async function fetchData<T>({
     url,
@@ -63,9 +63,17 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
 
   async function refreshStatuses(): Promise<void> {
     await fetchData<string[]>({
-      url: "campaign/statuses",
+      url: "utils/statuses",
       setState: setStatuses,
       error_feedback: "statusów",
+    });
+  }
+
+  async function refreshKeywords(): Promise<void> {
+    await fetchData<string[]>({
+      url: "utils/keywords",
+      setState: setKeywords,
+      error_feedback: "keywordów",
     });
   }
 
@@ -95,6 +103,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
       await refreshStatuses();
       await refreshBalance();
       await refreshCities();
+      await refreshKeywords();
     }
     loadData();
   }, []);
@@ -107,6 +116,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
         statuses,
         balance,
         cities,
+        keywords,
         fetchData,
         refreshCampaigns,
         refreshProducts,

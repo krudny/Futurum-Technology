@@ -30,6 +30,9 @@ public class CampaignRequest {
     @NotNull(message = "City cannot be null")
     private String city;
 
+    @NotNull(message = "Keyword cannot be null")
+    private String keyword;
+
     @NotNull(message = "Product ID cannot be null")
     @Min(value = 1, message = "Product ID cannot be less than 0")
     private Integer productId;

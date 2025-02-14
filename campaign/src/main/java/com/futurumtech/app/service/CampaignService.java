@@ -4,6 +4,7 @@ import com.futurumtech.app.DTO.CampaignRequest;
 import com.futurumtech.app.model.Campaign;
 import com.futurumtech.app.model.City;
 import com.futurumtech.app.model.Product;
+import com.futurumtech.app.model.enums.Keywords;
 import com.futurumtech.app.model.enums.Status;
 import com.futurumtech.app.repository.CampaignRepository;
 import com.futurumtech.app.repository.CityRepository;
@@ -36,6 +37,7 @@ public class CampaignService {
         Product product = productService.getProductById(request.getProductId().longValue());
         City city = cityRepository.findByName(request.getCity()).get();
         Status status = statusService.getStatusFromString(request.getStatus());
+        Keywords keyword = Keywords.valueOf(request.getKeyword());
 
 
         if(userService.getBalance(1L) < request.getFund()) {
@@ -47,6 +49,7 @@ public class CampaignService {
                 .bid(request.getBid())
                 .fund(request.getFund())
                 .radius(request.getRadius())
+                .keyword(keyword)
                 .city(city)
                 .product(product)
                 .status(status)
@@ -62,6 +65,7 @@ public class CampaignService {
         Status status = statusService.getStatusFromString(request.getStatus());
         City city = cityRepository.findByName(request.getCity()).get();
         Campaign campaign = campaignRepository.findById(campaignId).orElseThrow(() -> new IllegalArgumentException("Such campaign doesnt exist!"));
+        Keywords keyword = Keywords.valueOf(request.getKeyword());
 
         if (userService.getBalance(1L) + campaign.getFund() - request.getFund() < 0) {
             throw new IllegalArgumentException("You dont have enough money!");
@@ -72,6 +76,7 @@ public class CampaignService {
         campaign.setBid(request.getBid());
         campaign.setFund(request.getFund());
         campaign.setRadius(request.getRadius());
+        campaign.setKeyword(keyword);
         campaign.setCity(city);
         campaign.setProduct(product);
         campaign.setStatus(status);

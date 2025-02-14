@@ -23,11 +23,6 @@ public class CampaignController {
         return campaignService.getAllCampaigns();
     }
 
-    @GetMapping("/statuses")
-    public List<Status> getAllStatuses() {
-        return Arrays.asList(Status.values());
-    }
-
     @PostMapping("")
     public ResponseEntity<?> addCampaign(@Valid @RequestBody CampaignRequest request) {
         campaignService.addCampaign(request);

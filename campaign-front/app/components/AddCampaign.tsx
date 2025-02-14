@@ -6,7 +6,7 @@ import {
   DialogActions,
   Button,
   MenuItem,
-  CircularProgress,
+ Autocomplete,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -23,6 +23,7 @@ export default function AddCampaign() {
     cities,
     products,
     statuses,
+      keywords,
   } = useApplicationContext();
   const { campaignDialog, toggleCampaignDialog } = useDialogContext();
 
@@ -33,10 +34,10 @@ export default function AddCampaign() {
     status: "",
     radius: 0,
     city: "",
+    keyword: "",
     productId: 0,
   });
 
-  // Ustaw domyślne wartości, gdy dane zostaną załadowane
   useEffect(() => {
     if (statuses.length && cities.length && products.length) {
       const availableProducts = products.filter(
@@ -46,13 +47,14 @@ export default function AddCampaign() {
         name: "",
         bid: 0,
         fund: 0,
-        status: statuses[0], // domyślnie pierwszy status
+        status: statuses[0],
         radius: 0,
-        city: cities[0].name, // domyślnie pierwsze miasto
+        city: cities[0].name,
+        keyword: keywords[0],
         productId: availableProducts.length ? availableProducts[0].id : 0,
       });
     }
-  }, [statuses, cities, products]);
+  }, [statuses, cities, products, keywords]);
 
   const fields: Field[] = [
     { label: "Campaign Name", name: "name", type: "text" },
@@ -101,7 +103,7 @@ export default function AddCampaign() {
             label={label}
             name={name}
             type={type}
-            value={(formData as any)[name] || ""}
+            value={(formData)[name] || ""}
             onChange={handleChange}
             required
             fullWidth
@@ -140,6 +142,23 @@ export default function AddCampaign() {
             </MenuItem>
           ))}
         </TextField>
+        <Autocomplete
+            options={keywords}
+            value={formData.keyword || ""}
+            onChange={(event, newValue) =>
+                setFormData({ ...formData, keyword: newValue || "" })
+            }
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label="Keyword"
+                    variant="outlined"
+                    margin="dense"
+                    fullWidth
+                    required
+                />
+            )}
+        />
         <TextField
           select
           label="Product Name"

@@ -43,6 +43,7 @@ export default function CampaignList() {
                   <TableCell>Fund</TableCell>
                   <TableCell>Product</TableCell>
                   <TableCell>City</TableCell>
+                  <TableCell>Keyword</TableCell>
                   <TableCell>Radius</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell colSpan={2} align="center">
@@ -58,6 +59,7 @@ export default function CampaignList() {
                     <TableCell>{campaign.fund}</TableCell>
                     <TableCell>{campaign.product.name}</TableCell>
                     <TableCell>{campaign.city.name}</TableCell>
+                    <TableCell>{campaign.keyword}</TableCell>
                     <TableCell>{campaign.radius}</TableCell>
                     <TableCell>{campaign.status}</TableCell>
                     <TableCell sx={{ width: "40px" }}>

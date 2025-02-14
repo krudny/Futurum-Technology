@@ -5,7 +5,7 @@ import {
   TextField,
   DialogActions,
   Button,
-  MenuItem,
+  MenuItem, Autocomplete,
 } from "@mui/material";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -21,6 +21,7 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
     cities,
     products,
     statuses,
+      keywords
   } = useApplicationContext();
   const { editDialog, toggleEditDialog } = useDialogContext();
 
@@ -31,6 +32,7 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
     status: campaign.status,
     city: campaign.city.name,
     radius: campaign.radius,
+    keyword: campaign.keyword,
     productId: campaign.product.id,
   });
 
@@ -83,7 +85,7 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
             label={label}
             name={name}
             type={type}
-            value={(formData as any)[name] || ""}
+            value={(formData)[name] || ""}
             onChange={handleChange}
             required
             fullWidth
@@ -122,6 +124,23 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
             </MenuItem>
           ))}
         </TextField>
+        <Autocomplete
+            options={keywords}
+            value={formData.keyword || ""}
+            onChange={(event, newValue) =>
+                setFormData({ ...formData, keyword: newValue || "" })
+            }
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label="Keyword"
+                    variant="outlined"
+                    margin="dense"
+                    fullWidth
+                    required
+                />
+            )}
+        />
         <TextField
           select
           label="Product Name"

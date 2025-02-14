@@ -12,6 +12,7 @@ export interface Campaign {
   fund: number;
   city: City;
   product: Product;
+  keyword: string;
   radius: number;
   status: string;
 }
@@ -42,6 +43,7 @@ export interface ApplicationContextType {
   statuses: string[];
   balance: number;
   cities: City[];
+  keywords: string[];
   fetchData: <T>(props: FetchDataProps<T>) => Promise<void>;
   refreshCampaigns: () => Promise<void>;
   refreshProducts: () => Promise<void>;
@@ -63,6 +65,7 @@ export interface FormData {
   status: string;
   radius: number;
   city: string;
+  keyword: string;
   productId: number | string;
 }
 
