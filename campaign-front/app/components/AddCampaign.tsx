@@ -12,10 +12,8 @@ import toast from "react-hot-toast";
 import { useApplicationContext } from "@/app/utils/ApplicationContext";
 import {DialogProps, Field, FormData} from "@/app/interfaces/interfaces";
 
-
-
 export default function AddCampaign({ open, setOpen }: DialogProps) {
-  const {refreshCampaigns, products, statuses } = useApplicationContext();
+  const {refreshProducts, refreshCampaigns, refreshBalance, products, statuses } = useApplicationContext();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     bid: "",
@@ -34,7 +32,6 @@ export default function AddCampaign({ open, setOpen }: DialogProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -45,7 +42,9 @@ export default function AddCampaign({ open, setOpen }: DialogProps) {
     });
 
     const message = await response.text();
+    await refreshProducts();
     await refreshCampaigns();
+    await refreshBalance();
     toast[response.status === 200 ? "success" : "error"](message);
     setOpen(false);
 
@@ -95,11 +94,13 @@ export default function AddCampaign({ open, setOpen }: DialogProps) {
           fullWidth
           margin="dense"
         >
-          {products.map((product) => (
-            <MenuItem key={product.id} value={product.id}>
-              {product.name}
-            </MenuItem>
-          ))}
+          {products
+              .filter(product => product.campaignId === null)
+              .map(product => (
+                  <MenuItem key={product.id} value={product.id}>
+                    {product.name}
+                  </MenuItem>
+              ))}
         </TextField>
       </DialogContent>
       <DialogActions className="flex justify-center">

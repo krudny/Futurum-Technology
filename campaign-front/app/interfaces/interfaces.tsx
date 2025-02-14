@@ -13,6 +13,7 @@ export interface Campaign {
 export interface Product {
   id: number;
   name: string;
+  campaignId: number | null;
 }
 
 export interface ApplicationContextType {

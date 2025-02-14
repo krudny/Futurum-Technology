@@ -1,6 +1,5 @@
 package com.futurumtech.app.service;
 
-import com.futurumtech.app.DTO.UpdateBalanceRequest;
 import com.futurumtech.app.model.User;
 import com.futurumtech.app.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -20,10 +19,10 @@ public class UserService {
         return user.getBalance();
     }
 
-    public void updateBalance(UpdateBalanceRequest updateBalanceRequest) {
-        User user = getUser(updateBalanceRequest.getUserId());
+    public void updateBalance(Long userId, int spending) {
+        User user = getUser(userId);
 
-        user.setBalance(updateBalanceRequest.getNewBalance());
+        user.setBalance(user.getBalance() - spending);
         userRepository.save(user);
     }
 }

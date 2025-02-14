@@ -45,6 +45,8 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
     });
     const message = await response.text();
     await refreshCampaigns();
+    await refreshProducts();
+    await refreshBalance();
     toast[response.status === 200 ? "success" : "error"](message);
   }
 

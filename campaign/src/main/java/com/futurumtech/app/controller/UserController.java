@@ -1,10 +1,7 @@
 package com.futurumtech.app.controller;
 
-import com.futurumtech.app.DTO.UpdateBalanceRequest;
 import com.futurumtech.app.service.UserService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,9 +15,4 @@ public class UserController {
         return userService.getBalance(userId);
     }
 
-    @PutMapping("/balance")
-    public ResponseEntity<?> updateBalance(@Valid @RequestBody UpdateBalanceRequest updateBalanceRequest) {
-        userService.updateBalance(updateBalanceRequest);
-        return ResponseEntity.ok("User balance updated successfully!");
-    }
 }
