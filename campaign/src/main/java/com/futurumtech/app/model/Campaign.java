@@ -27,6 +27,7 @@ public class Campaign {
 
     private Integer radius;
 
-    @OneToOne(mappedBy = "campaign")
+    @OneToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id", unique = true)
     private Product product;
 }

@@ -2,23 +2,30 @@ package com.futurumtech.app.controller;
 
 import com.futurumtech.app.DTO.CampaignRequest;
 import com.futurumtech.app.model.Campaign;
+import com.futurumtech.app.model.enums.Status;
 import com.futurumtech.app.service.CampaignService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/campaigns")
+@RequestMapping("/campaign")
 public class CampaignController {
     private final CampaignService campaignService;
 
     @GetMapping("")
     public List<Campaign> getAllCampaigns() {
         return campaignService.getAllCampaigns();
+    }
+
+    @GetMapping("/statuses")
+    public List<Status> getAllStatuses() {
+        return Arrays.asList(Status.values());
     }
 
     @PostMapping("")

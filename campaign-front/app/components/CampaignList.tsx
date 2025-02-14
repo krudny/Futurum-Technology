@@ -1,17 +1,10 @@
-"use client"
+"use client";
 import { TableContainer, Paper, Table, TableHead, TableRow, TableBody, TableCell } from "@mui/material";
-import {useEffect, useState} from "react";
+import {useCampaigns} from "@/app/utils/CampaignContext";
+
 
 export default function CampaignList() {
-  const [campaigns, setCampaigns] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:8080/campaign")
-        .then((res) => res.json())
-        .then(setCampaigns)
-        .catch(console.error);
-
-  }, []);
+  const { campaigns, fetchCampaigns } = useCampaigns();
 
   return (
       <TableContainer component={Paper} className="mt-10">
@@ -32,7 +25,7 @@ export default function CampaignList() {
                   <TableCell>{campaign.name}</TableCell>
                   <TableCell>{campaign.bid}</TableCell>
                   <TableCell>{campaign.fund}</TableCell>
-                  <TableCell>{campaign.product}</TableCell>
+                  <TableCell>{campaign.product.name}</TableCell>
                   <TableCell>{campaign.radius}</TableCell>
                   <TableCell>{campaign.status}</TableCell>
                 </TableRow>
@@ -40,5 +33,5 @@ export default function CampaignList() {
           </TableBody>
         </Table>
       </TableContainer>
-  )
+  );
 }

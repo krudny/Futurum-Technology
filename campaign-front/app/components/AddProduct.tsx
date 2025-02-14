@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import {useCampaigns} from "@/app/utils/CampaignContext";
 
 export default function AddProduct({
   open,
@@ -17,6 +18,7 @@ export default function AddProduct({
   setOpen: (open: boolean) => void;
 }) {
   const [name, setName] = useState("");
+  const { fetchProducts } = useCampaigns();
 
   const handleClose = () => {
     setOpen(false);
@@ -33,6 +35,7 @@ export default function AddProduct({
     );
 
     const message = await response.text();
+    await fetchProducts();
 
     if (response.status === 200) {
       toast.success(message);
