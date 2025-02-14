@@ -8,46 +8,27 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import {useCampaigns} from "@/app/utils/CampaignContext";
+import { useApplicationContext } from "@/app/utils/ApplicationContext";
+import {DialogProps } from "@/app/interfaces/interfaces";
 
-export default function AddProduct({
-  open,
-  setOpen,
-}: {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}) {
+export default function AddProduct({open, setOpen}: DialogProps) {
   const [name, setName] = useState("");
-  const { fetchProducts } = useCampaigns();
+  const { refreshProducts } = useApplicationContext();
 
-  const handleClose = () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const response = await fetch(
+        `http://localhost:8080/products?${new URLSearchParams({ name })}`,
+        { method: "POST" }
+    );
+    const message = await response.text();
+    await refreshProducts();
+    toast[response.status === 200 ? "success" : "error"](message);
     setOpen(false);
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const params = new URLSearchParams({ name });
-    const response = await fetch(
-      `http://localhost:8080/products?${params.toString()}`,
-      {
-        method: "POST",
-      },
-    );
-
-    const message = await response.text();
-    await fetchProducts();
-
-    if (response.status === 200) {
-      toast.success(message);
-    } else {
-      toast.error(message);
-    }
-
-    handleClose();
-  };
-
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
+    <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="xs">
       <DialogTitle>Add product</DialogTitle>
       <DialogContent>
         <TextField
@@ -63,7 +44,7 @@ export default function AddProduct({
         />
       </DialogContent>
       <DialogActions className="flex justify-center">
-        <Button onClick={handleClose} variant="outlined" color="error">
+        <Button onClick={() => setOpen(false)} variant="outlined" color="error">
           Cancel
         </Button>
         <Button
