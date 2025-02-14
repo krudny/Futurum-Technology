@@ -1,17 +1,30 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {Campaign, ApplicationContextType, FetchDataProps, Product, City} from "@/app/interfaces/interfaces";
+import {
+  Campaign,
+  ApplicationContextType,
+  FetchDataProps,
+  Product,
+  City,
+  Status,
+} from "@/app/interfaces/interfaces";
 import toast from "react-hot-toast";
 
-const ApplicationContext = createContext<ApplicationContextType | undefined>(undefined);
+const ApplicationContext = createContext<ApplicationContextType | undefined>(
+  undefined,
+);
 
 export function CampaignProvider({ children }: { children: React.ReactNode }) {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [statuses, setStatuses] = useState<string[]>([]);
   const [balance, setBalance] = useState(0);
-  const [cities, setCities] = useState<City[]>([])
+  const [cities, setCities] = useState<City[]>([]);
 
-  async function fetchData<T>({ url, setState, error_feedback }: FetchDataProps<T>): Promise<void> {
+  async function fetchData<T>({
+    url,
+    setState,
+    error_feedback,
+  }: FetchDataProps<T>): Promise<void> {
     try {
       const response = await fetch(`http://localhost:8080/${url}`);
       if (!response.ok) {
@@ -25,23 +38,43 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function refreshCities(): Promise<void> {
-    await fetchData<City[]>({ url: "city", setState: setCities, error_feedback: "miast" });
+    await fetchData<City[]>({
+      url: "city",
+      setState: setCities,
+      error_feedback: "miast",
+    });
   }
 
   async function refreshCampaigns(): Promise<void> {
-    await fetchData<Campaign[]>({ url: "campaign", setState: setCampaigns, error_feedback: "kampanii" });
+    await fetchData<Campaign[]>({
+      url: "campaign",
+      setState: setCampaigns,
+      error_feedback: "kampanii",
+    });
   }
 
   async function refreshProducts(): Promise<void> {
-    await fetchData<Product[]>({ url: "products", setState: setProducts, error_feedback: "produktów" });
+    await fetchData<Product[]>({
+      url: "products",
+      setState: setProducts,
+      error_feedback: "produktów",
+    });
   }
 
   async function refreshStatuses(): Promise<void> {
-    await fetchData<string[]>({ url: "campaign/statuses", setState: setStatuses, error_feedback: "statusów" });
+    await fetchData<string[]>({
+      url: "campaign/statuses",
+      setState: setStatuses,
+      error_feedback: "statusów",
+    });
   }
 
   async function refreshBalance(): Promise<void> {
-    await fetchData<number>({ url: "user/balance?userId=1", setState: setBalance, error_feedback: "balansu" });
+    await fetchData<number>({
+      url: "user/balance?userId=1",
+      setState: setBalance,
+      error_feedback: "balansu",
+    });
   }
 
   async function deleteCampaign(id: number): Promise<void> {
@@ -56,38 +89,43 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    refreshCampaigns();
-    refreshProducts();
-    refreshStatuses();
-    refreshBalance();
-    refreshCities();
+    async function loadData() {
+      await refreshCampaigns();
+      await refreshProducts();
+      await refreshStatuses();
+      await refreshBalance();
+      await refreshCities();
+    }
+    loadData();
   }, []);
 
   return (
-      <ApplicationContext.Provider
-          value={{
-            campaigns,
-            products,
-            statuses,
-            balance,
-            cities,
-            fetchData,
-            refreshCampaigns,
-            refreshProducts,
-            refreshStatuses,
-            refreshBalance,
-            deleteCampaign,
-          }}
-      >
-        {children}
-      </ApplicationContext.Provider>
+    <ApplicationContext.Provider
+      value={{
+        campaigns,
+        products,
+        statuses,
+        balance,
+        cities,
+        fetchData,
+        refreshCampaigns,
+        refreshProducts,
+        refreshStatuses,
+        refreshBalance,
+        deleteCampaign,
+      }}
+    >
+      {children}
+    </ApplicationContext.Provider>
   );
 }
 
 export function useApplicationContext() {
   const context = useContext(ApplicationContext);
   if (context === undefined) {
-    throw new Error("useApplicationContext must be used within a ApplicationProvider");
+    throw new Error(
+      "useApplicationContext must be used within a ApplicationProvider",
+    );
   }
   return context;
 }

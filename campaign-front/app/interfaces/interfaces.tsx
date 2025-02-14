@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction} from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export interface City {
   id: number;
@@ -10,6 +10,7 @@ export interface Campaign {
   name: string;
   bid: number;
   fund: number;
+  city: City;
   product: Product;
   radius: number;
   status: string;
@@ -21,10 +22,15 @@ export interface Product {
   campaignId: number | null;
 }
 
+export interface Status {
+  id: number;
+  name: string;
+}
+
 export interface DialogContextType {
-  productDialog: boolean
-  campaignDialog: boolean
-  editDialog: boolean
+  productDialog: boolean;
+  campaignDialog: boolean;
+  editDialog: boolean;
   toggleProductDialog: () => void;
   toggleCampaignDialog: () => void;
   toggleEditDialog: () => void;
@@ -52,21 +58,16 @@ export interface FetchDataProps<T> {
 
 export interface FormData {
   name: string;
-  bid: string;
-  fund: string;
+  bid: number;
+  fund: number;
   status: string;
-  radius: string;
+  radius: number;
   city: string;
-  productID: string;
+  productId: number | string;
 }
 
 export interface Field {
   label: string;
   name: keyof FormData;
   type: string;
-}
-
-export interface DialogProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
 }

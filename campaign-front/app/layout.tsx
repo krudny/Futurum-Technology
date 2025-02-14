@@ -2,7 +2,7 @@
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { CampaignProvider } from "@/app/utils/ApplicationContext";
-import {DialogProvider} from "@/app/utils/DialogContext";
+import { DialogProvider } from "@/app/utils/DialogContext";
 
 export default function RootLayout({
   children,

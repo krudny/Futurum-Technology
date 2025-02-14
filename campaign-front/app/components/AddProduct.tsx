@@ -19,8 +19,8 @@ export default function AddProduct() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const response = await fetch(
-        `http://localhost:8080/products?${new URLSearchParams({ name })}`,
-        { method: "POST" }
+      `http://localhost:8080/products?${new URLSearchParams({ name })}`,
+      { method: "POST" },
     );
     const message = await response.text();
     await refreshProducts();
@@ -29,7 +29,12 @@ export default function AddProduct() {
   };
 
   return (
-    <Dialog open={productDialog} onClose={toggleProductDialog} fullWidth maxWidth="xs">
+    <Dialog
+      open={productDialog}
+      onClose={toggleProductDialog}
+      fullWidth
+      maxWidth="xs"
+    >
       <DialogTitle>Add product</DialogTitle>
       <DialogContent>
         <TextField

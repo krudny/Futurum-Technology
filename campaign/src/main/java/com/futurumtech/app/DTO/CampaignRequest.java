@@ -1,5 +1,6 @@
 package com.futurumtech.app.DTO;
 
+import com.futurumtech.app.model.City;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,7 +27,10 @@ public class CampaignRequest {
     @Min(value = 1, message = "Radius cannot be less than 1")
     private Integer radius;
 
+    @NotNull(message = "City cannot be null")
+    private String city;
+
     @NotNull(message = "Product ID cannot be null")
     @Min(value = 1, message = "Product ID cannot be less than 0")
-    private Long productID;
+    private Integer productId;
 }

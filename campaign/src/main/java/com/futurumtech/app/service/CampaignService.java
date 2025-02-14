@@ -2,9 +2,11 @@ package com.futurumtech.app.service;
 
 import com.futurumtech.app.DTO.CampaignRequest;
 import com.futurumtech.app.model.Campaign;
+import com.futurumtech.app.model.City;
 import com.futurumtech.app.model.Product;
 import com.futurumtech.app.model.enums.Status;
 import com.futurumtech.app.repository.CampaignRepository;
+import com.futurumtech.app.repository.CityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class CampaignService {
     private final StatusService statusService;
     private final ProductService productService;
     private final UserService userService;
+    private final CityRepository cityRepository;
 
     public List<Campaign> getAllCampaigns() {
         return campaignRepository.findAll();
@@ -30,11 +33,13 @@ public class CampaignService {
 
     public void addCampaign(CampaignRequest request) {
         checkBid(request.getBid(), request.getFund());
-        Product product = productService.getProductById(request.getProductID());
+        Product product = productService.getProductById(request.getProductId().longValue());
+        City city = cityRepository.findByName(request.getCity()).get();
         Status status = statusService.getStatusFromString(request.getStatus());
 
+
         if(userService.getBalance(1L) < request.getFund()) {
-            throw new IllegalArgumentException("You don't have enough money to create campaign!");
+            throw new IllegalArgumentException("You dont have enough money!");
         }
 
         Campaign campaign = Campaign.builder()
@@ -42,30 +47,37 @@ public class CampaignService {
                 .bid(request.getBid())
                 .fund(request.getFund())
                 .radius(request.getRadius())
+                .city(city)
                 .product(product)
                 .status(status)
                 .build();
 
         campaignRepository.save(campaign);
-        userService.updateBalance(1L, request.getFund());
+        userService.updateBalance(1L);
     }
 
     public void updateCampaign(Long campaignId, CampaignRequest request) {
         checkBid(request.getBid(), request.getFund());
-        Product product = productService.getProductById(request.getProductID());
+        Product product = productService.getProductById(request.getProductId().longValue());
         Status status = statusService.getStatusFromString(request.getStatus());
+        City city = cityRepository.findByName(request.getCity()).get();
+        Campaign campaign = campaignRepository.findById(campaignId).orElseThrow(() -> new IllegalArgumentException("Such campaign doesnt exist!"));
 
-        campaignRepository.findById(campaignId)
-                .map(campaign -> {
-                    campaign.setName(request.getName());
-                    campaign.setBid(request.getBid());
-                    campaign.setFund(request.getFund());
-                    campaign.setRadius(request.getRadius());
-                    campaign.setProduct(product);
-                    campaign.setStatus(status);
-                    return campaignRepository.save(campaign);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Such campaign does not exist!"));
+        if (userService.getBalance(1L) + campaign.getFund() - request.getFund() < 0) {
+            throw new IllegalArgumentException("You dont have enough money!");
+        }
+
+
+        campaign.setName(request.getName());
+        campaign.setBid(request.getBid());
+        campaign.setFund(request.getFund());
+        campaign.setRadius(request.getRadius());
+        campaign.setCity(city);
+        campaign.setProduct(product);
+        campaign.setStatus(status);
+
+        campaignRepository.save(campaign);
+        userService.updateBalance(1L);
     }
 
     public void deleteCampaign(Long campaignId) {
@@ -73,8 +85,9 @@ public class CampaignService {
         Product product = campaign.getProduct();
         product.setCampaign(null);
 
-        userService.updateBalance(1L, (-1) * campaign.getFund());
+
         campaignRepository.deleteById(campaignId);
+        userService.updateBalance(1L);
     }
 
 

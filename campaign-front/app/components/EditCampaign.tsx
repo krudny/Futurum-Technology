@@ -6,16 +6,14 @@ import {
   DialogActions,
   Button,
   MenuItem,
-  CircularProgress,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useApplicationContext } from "@/app/utils/ApplicationContext";
-import { Field, FormData } from "@/app/interfaces/interfaces";
+import { Campaign, Field, FormData } from "@/app/interfaces/interfaces";
 import { useDialogContext } from "@/app/utils/DialogContext";
-import Loading from "@/app/loading";
 
-export default function AddCampaign() {
+export default function EditCampaign({ campaign }: { campaign: Campaign }) {
   const {
     refreshProducts,
     refreshCampaigns,
@@ -24,35 +22,17 @@ export default function AddCampaign() {
     products,
     statuses,
   } = useApplicationContext();
-  const { campaignDialog, toggleCampaignDialog } = useDialogContext();
+  const { editDialog, toggleEditDialog } = useDialogContext();
 
   const [formData, setFormData] = useState<FormData>({
-    name: "",
-    bid: 0,
-    fund: 0,
-    status: "",
-    radius: 0,
-    city: "",
-    productId: 0,
+    name: campaign.name,
+    bid: campaign.bid,
+    fund: campaign.fund,
+    status: campaign.status,
+    city: campaign.city.name,
+    radius: campaign.radius,
+    productId: campaign.product.id,
   });
-
-  // Ustaw domyślne wartości, gdy dane zostaną załadowane
-  useEffect(() => {
-    if (statuses.length && cities.length && products.length) {
-      const availableProducts = products.filter(
-        (product) => product.campaignId === null,
-      );
-      setFormData({
-        name: "",
-        bid: 0,
-        fund: 0,
-        status: statuses[0], // domyślnie pierwszy status
-        radius: 0,
-        city: cities[0].name, // domyślnie pierwsze miasto
-        productId: availableProducts.length ? availableProducts[0].id : 0,
-      });
-    }
-  }, [statuses, cities, products]);
 
   const fields: Field[] = [
     { label: "Campaign Name", name: "name", type: "text" },
@@ -63,37 +43,39 @@ export default function AddCampaign() {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  ) => setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:8080/campaign", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch(
+      `http://localhost:8080/campaign/${campaign.id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      },
+    );
     const message = await response.text();
     await refreshProducts();
     await refreshCampaigns();
     await refreshBalance();
     toast[response.status === 200 ? "success" : "error"](message);
-    toggleCampaignDialog();
+    toggleEditDialog();
   };
 
-  if (!statuses.length || !cities.length || !products.length) {
-    return <Loading />;
-  }
+  const availableProducts = products.filter(
+    (product) =>
+      product.campaignId === null || product.id === formData.productId,
+  );
 
   return (
     <Dialog
-      open={campaignDialog}
-      onClose={toggleCampaignDialog}
+      open={editDialog}
+      onClose={toggleEditDialog}
       fullWidth
       maxWidth="xs"
     >
-      <DialogTitle>Add Campaign</DialogTitle>
+      <DialogTitle>Edit Campaign</DialogTitle>
       <DialogContent>
         {fields.map(({ label, name, type }) => (
           <TextField
@@ -152,17 +134,15 @@ export default function AddCampaign() {
           fullWidth
           margin="dense"
         >
-          {products
-            .filter((product) => product.campaignId === null)
-            .map((product) => (
-              <MenuItem key={product.id} value={product.id}>
-                {product.name}
-              </MenuItem>
-            ))}
+          {availableProducts.map((product) => (
+            <MenuItem key={product.id} value={product.id}>
+              {product.name}
+            </MenuItem>
+          ))}
         </TextField>
       </DialogContent>
       <DialogActions style={{ justifyContent: "center" }}>
-        <Button onClick={toggleCampaignDialog} variant="outlined" color="error">
+        <Button onClick={toggleEditDialog} variant="outlined" color="error">
           Cancel
         </Button>
         <Button
@@ -171,7 +151,7 @@ export default function AddCampaign() {
           variant="outlined"
           color="success"
         >
-          Add Campaign
+          Save Campaign
         </Button>
       </DialogActions>
     </Dialog>

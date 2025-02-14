@@ -28,6 +28,10 @@ public class Campaign {
 
     private Integer radius;
 
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+
     @OneToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", unique = true)
     @JsonManagedReference

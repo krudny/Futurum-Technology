@@ -4,13 +4,12 @@ import { Button } from "@mui/material";
 import AddProduct from "@/app/components/AddProduct";
 import AddCampaign from "@/app/components/AddCampaign";
 import CampaignList from "@/app/components/CampaignList";
-import {useApplicationContext} from "@/app/utils/ApplicationContext"
-import {useDialogContext} from "@/app/utils/DialogContext";
+import { useApplicationContext } from "@/app/utils/ApplicationContext";
+import { useDialogContext } from "@/app/utils/DialogContext";
 
 export default function Home() {
   const { balance } = useApplicationContext();
-  const {toggleProductDialog, toggleCampaignDialog } = useDialogContext();
-
+  const { toggleProductDialog, toggleCampaignDialog } = useDialogContext();
 
   return (
     <div className="container flex flex-col items-center justify-center mx-auto max-w-screen-lg">

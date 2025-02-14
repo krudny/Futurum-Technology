@@ -1,32 +1,31 @@
-import React, {createContext, useContext, useState} from "react";
-import {DialogContextType} from "@/app/interfaces/interfaces";
+import React, { createContext, useContext, useState } from "react";
+import { DialogContextType } from "@/app/interfaces/interfaces";
 
-const DialogContext  = createContext<DialogContextType | undefined>(undefined);
+const DialogContext = createContext<DialogContextType | undefined>(undefined);
 
 export function DialogProvider({ children }: { children: React.ReactNode }) {
   const [productDialog, setProductDialog] = useState(false);
   const [campaignDialog, setCampaignDialog] = useState(false);
   const [editDialog, setEditDialog] = useState(false);
 
-
-  const toggleProductDialog = () => setProductDialog(prev => !prev);
-  const toggleCampaignDialog = () => setCampaignDialog(prev => !prev);
-  const toggleEditDialog = () => setEditDialog(prev => !prev);
+  const toggleProductDialog = () => setProductDialog((prev) => !prev);
+  const toggleCampaignDialog = () => setCampaignDialog((prev) => !prev);
+  const toggleEditDialog = () => setEditDialog((prev) => !prev);
 
   return (
     <DialogContext.Provider
-        value={{
-          productDialog,
-          campaignDialog,
-          editDialog,
-          toggleProductDialog,
-          toggleCampaignDialog,
-          toggleEditDialog,
-        }}
+      value={{
+        productDialog,
+        campaignDialog,
+        editDialog,
+        toggleProductDialog,
+        toggleCampaignDialog,
+        toggleEditDialog,
+      }}
     >
       {children}
     </DialogContext.Provider>
-);
+  );
 }
 
 export function useDialogContext() {
