@@ -1,24 +1,16 @@
 "use client";
 
 import { Button } from "@mui/material";
-import { useState } from "react";
 import AddProduct from "@/app/components/AddProduct";
 import AddCampaign from "@/app/components/AddCampaign";
 import CampaignList from "@/app/components/CampaignList";
 import {useApplicationContext} from "@/app/utils/ApplicationContext"
+import {useDialogContext} from "@/app/utils/DialogContext";
 
 export default function Home() {
-  const [openProductDialog, setOpenProductDialog] = useState(false);
-  const [openCampaignDialog, setOpenCampaignDialog] = useState(false);
   const { balance } = useApplicationContext();
+  const {toggleProductDialog, toggleCampaignDialog } = useDialogContext();
 
-  const handleOpenProductDialog = () => {
-    setOpenProductDialog(true);
-  };
-
-  const handleOpenCampaignDialog = () => {
-    setOpenCampaignDialog(true);
-  };
 
   return (
     <div className="container flex flex-col items-center justify-center mx-auto max-w-screen-lg">
@@ -35,7 +27,7 @@ export default function Home() {
           variant="outlined"
           color="primary"
           size="large"
-          onClick={handleOpenProductDialog}
+          onClick={toggleProductDialog}
         >
           Add product
         </Button>
@@ -43,14 +35,14 @@ export default function Home() {
           variant="outlined"
           color="primary"
           size="large"
-          onClick={handleOpenCampaignDialog}
+          onClick={toggleCampaignDialog}
         >
           Add campaign
         </Button>
       </div>
 
-      <AddProduct open={openProductDialog} setOpen={setOpenProductDialog} />
-      <AddCampaign open={openCampaignDialog} setOpen={setOpenCampaignDialog} />
+      <AddProduct />
+      <AddCampaign />
       <CampaignList />
     </div>
   );

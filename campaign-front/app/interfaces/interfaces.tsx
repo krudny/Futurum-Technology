@@ -21,6 +21,15 @@ export interface Product {
   campaignId: number | null;
 }
 
+export interface DialogContextType {
+  productDialog: boolean
+  campaignDialog: boolean
+  editDialog: boolean
+  toggleProductDialog: () => void;
+  toggleCampaignDialog: () => void;
+  toggleEditDialog: () => void;
+}
+
 export interface ApplicationContextType {
   campaigns: Campaign[];
   products: Product[];

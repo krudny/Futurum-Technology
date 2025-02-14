@@ -10,10 +10,12 @@ import {
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useApplicationContext } from "@/app/utils/ApplicationContext";
-import {DialogProps, Field, FormData} from "@/app/interfaces/interfaces";
+import { Field, FormData} from "@/app/interfaces/interfaces";
+import {useDialogContext} from "@/app/utils/DialogContext";
 
-export default function AddCampaign({ open, setOpen }: DialogProps) {
+export default function AddCampaign() {
   const {refreshProducts, refreshCampaigns, refreshBalance, cities, products, statuses } = useApplicationContext();
+  const { campaignDialog, toggleCampaignDialog } = useDialogContext();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     bid: "",
@@ -47,12 +49,11 @@ export default function AddCampaign({ open, setOpen }: DialogProps) {
     await refreshCampaigns();
     await refreshBalance();
     toast[response.status === 200 ? "success" : "error"](message);
-    setOpen(false);
-
+    toggleCampaignDialog();
   };
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="xs">
+    <Dialog open={campaignDialog} onClose={toggleCampaignDialog} fullWidth maxWidth="xs">
       <DialogTitle>Add Campaign</DialogTitle>
       <DialogContent>
         {fields.map(({ label, name, type }) => (
@@ -121,7 +122,7 @@ export default function AddCampaign({ open, setOpen }: DialogProps) {
         </TextField>
       </DialogContent>
       <DialogActions className="flex justify-center">
-        <Button onClick={() => setOpen(false)} variant="outlined" color="error">
+        <Button onClick={toggleCampaignDialog} variant="outlined" color="error">
           Cancel
         </Button>
         <Button

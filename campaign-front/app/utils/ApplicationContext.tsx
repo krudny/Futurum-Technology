@@ -86,8 +86,8 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
 
 export function useApplicationContext() {
   const context = useContext(ApplicationContext);
-  if (!context) {
-    throw new Error("useCampaigns must be used within a CampaignProvider");
+  if (context === undefined) {
+    throw new Error("useApplicationContext must be used within a ApplicationProvider");
   }
   return context;
 }

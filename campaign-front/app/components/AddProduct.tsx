@@ -9,11 +9,12 @@ import {
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useApplicationContext } from "@/app/utils/ApplicationContext";
-import {DialogProps } from "@/app/interfaces/interfaces";
+import { useDialogContext } from "@/app/utils/DialogContext";
 
-export default function AddProduct({open, setOpen}: DialogProps) {
+export default function AddProduct() {
   const [name, setName] = useState("");
   const { refreshProducts } = useApplicationContext();
+  const { productDialog, toggleProductDialog } = useDialogContext();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,11 +25,11 @@ export default function AddProduct({open, setOpen}: DialogProps) {
     const message = await response.text();
     await refreshProducts();
     toast[response.status === 200 ? "success" : "error"](message);
-    setOpen(false);
+    toggleProductDialog();
   };
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="xs">
+    <Dialog open={productDialog} onClose={toggleProductDialog} fullWidth maxWidth="xs">
       <DialogTitle>Add product</DialogTitle>
       <DialogContent>
         <TextField
@@ -44,7 +45,7 @@ export default function AddProduct({open, setOpen}: DialogProps) {
         />
       </DialogContent>
       <DialogActions className="flex justify-center">
-        <Button onClick={() => setOpen(false)} variant="outlined" color="error">
+        <Button onClick={toggleProductDialog} variant="outlined" color="error">
           Cancel
         </Button>
         <Button
