@@ -39,6 +39,15 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
     await fetchData<number>({ url: "user/balance?userId=1", setState: setBalance, error_feedback: "balansu" });
   }
 
+  async function deleteCampaign(id: number): Promise<void> {
+    const response = await fetch(`http://localhost:8080/campaign/${id}`, {
+      method: "DELETE",
+    });
+    const message = await response.text();
+    await refreshCampaigns();
+    toast[response.status === 200 ? "success" : "error"](message);
+  }
+
   useEffect(() => {
     refreshCampaigns();
     refreshProducts();
@@ -58,6 +67,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
             refreshProducts,
             refreshStatuses,
             refreshBalance,
+            deleteCampaign,
           }}
       >
         {children}

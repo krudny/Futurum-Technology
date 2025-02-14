@@ -25,6 +25,7 @@ export interface ApplicationContextType {
   refreshProducts: () => Promise<void>;
   refreshStatuses: () => Promise<void>;
   refreshBalance: () => Promise<void>;
+  deleteCampaign: (id: number) => Promise<void>;
 }
 
 export interface FetchDataProps<T> {
