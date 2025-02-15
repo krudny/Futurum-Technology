@@ -77,11 +77,13 @@ export default function AddCampaign() {
       body: JSON.stringify(formData),
     });
     const message = await response.text();
-    await refreshProducts();
-    await refreshCampaigns();
-    await refreshBalance();
     toast[response.status === 200 ? "success" : "error"](message);
     toggleCampaignDialog();
+    await Promise.all([
+        refreshBalance(),
+        refreshProducts(),
+        refreshCampaigns(),
+    ])
   };
 
   if (!statuses.length || !cities.length || !products.length) {

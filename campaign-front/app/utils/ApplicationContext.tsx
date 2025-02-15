@@ -90,20 +90,24 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
       method: "DELETE",
     });
     const message = await response.text();
-    await refreshCampaigns();
-    await refreshProducts();
-    await refreshBalance();
+    await Promise.all([
+        refreshCampaigns(),
+        refreshProducts(),
+        refreshStatuses(),
+    ])
     toast[response.status === 200 ? "success" : "error"](message);
   }
 
   useEffect(() => {
     async function loadData() {
-      await refreshCampaigns();
-      await refreshProducts();
-      await refreshStatuses();
-      await refreshBalance();
-      await refreshCities();
-      await refreshKeywords();
+      await Promise.all([
+        refreshCampaigns(),
+        refreshProducts(),
+        refreshStatuses(),
+        refreshBalance(),
+        refreshCities(),
+        refreshKeywords(),
+      ]);
     }
     loadData();
   }, []);

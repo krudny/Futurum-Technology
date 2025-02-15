@@ -58,11 +58,13 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
       },
     );
     const message = await response.text();
-    await refreshProducts();
-    await refreshCampaigns();
-    await refreshBalance();
     toast[response.status === 200 ? "success" : "error"](message);
     toggleEditDialog();
+    await Promise.all([
+        refreshCampaigns(),
+        refreshBalance(),
+        refreshProducts(),
+    ])
   };
 
   const availableProducts = products.filter(
