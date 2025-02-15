@@ -10,6 +10,7 @@ Project is hosted [here](https://campaign-manager.vercel.app).
 
 ## Sample view
 
+![image](https://github.com/user-attachments/assets/c95d0985-e523-4bc7-9257-1ebe8d24d2d6)
 
 
 ## Key Features
