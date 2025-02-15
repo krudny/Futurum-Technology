@@ -58,6 +58,7 @@ export default function AddProduct() {
           type="submit"
           variant="outlined"
           color="success"
+          disabled = {!name}
         >
           Add product
         </Button>
