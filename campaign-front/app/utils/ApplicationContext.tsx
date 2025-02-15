@@ -106,7 +106,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
       ]);
     }
     loadData();
-  }, []);
+  });
 
   return (
     <ApplicationContext.Provider

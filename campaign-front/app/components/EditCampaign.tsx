@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import { useApplicationContext } from "@/app/utils/ApplicationContext";
 import { Field, FormData } from "@/app/interfaces/Interfaces";
 import { useDialogContext } from "@/app/utils/DialogContext";
-import {Campaign, City, Product, Status} from "@/app/interfaces/ModelInterfaces";
+import {Campaign, City, Product} from "@/app/interfaces/ModelInterfaces";
 
 export default function EditCampaign({ campaign }: { campaign: Campaign }) {
   const {
