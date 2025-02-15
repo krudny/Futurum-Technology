@@ -180,7 +180,7 @@ export default function AddCampaign() {
             ))}
         </TextField>
       </DialogContent>
-      <DialogActions style={{ justifyContent: "center" }}>
+      <DialogActions className="flex justify-center">
         <Button onClick={toggleCampaignDialog} variant="outlined" color="error">
           Cancel
         </Button>
