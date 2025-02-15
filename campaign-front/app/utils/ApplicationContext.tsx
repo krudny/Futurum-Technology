@@ -26,7 +26,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
     error_feedback,
   }: FetchDataProps<T>): Promise<void> {
     try {
-      const response = await fetch(`http://localhost:8080/${url}`);
+      const response = await fetch(`https://campaign-manger-374135600235.us-central1.run.app/${url}`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -86,7 +86,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function deleteCampaign(id: number): Promise<void> {
-    const response = await fetch(`http://localhost:8080/campaign/${id}`, {
+    const response = await fetch(`https://campaign-manger-374135600235.us-central1.run.app/campaign/${id}`, {
       method: "DELETE",
     });
     const message = await response.text();

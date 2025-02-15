@@ -50,7 +50,7 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const response = await fetch(
-      `http://localhost:8080/campaign/${campaign.id}`,
+      `https://campaign-manger-374135600235.us-central1.run.app/campaign/${campaign.id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

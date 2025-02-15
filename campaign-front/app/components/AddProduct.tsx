@@ -19,7 +19,7 @@ export default function AddProduct() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const response = await fetch(
-      `http://localhost:8080/products?${new URLSearchParams({ name })}`,
+      `https://campaign-manger-374135600235.us-central1.run.app/products?${new URLSearchParams({ name })}`,
       { method: "POST" },
     );
     const message = await response.text();
