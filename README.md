@@ -6,7 +6,7 @@
 
 ## Live Demo
 
-Project is hosted [here](https://campaign-manager.vercel.app).
+Project is hosted [here](https://futurum-technology.vercel.app/)
 
 ## Sample view
 
