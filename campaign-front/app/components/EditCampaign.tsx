@@ -10,8 +10,9 @@ import {
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useApplicationContext } from "@/app/utils/ApplicationContext";
-import { Campaign, Field, FormData } from "@/app/interfaces/interfaces";
+import { Field, FormData } from "@/app/interfaces/Interfaces";
 import { useDialogContext } from "@/app/utils/DialogContext";
+import {Campaign, City, Product, Status} from "@/app/interfaces/ModelInterfaces";
 
 export default function EditCampaign({ campaign }: { campaign: Campaign }) {
   const {
@@ -68,7 +69,7 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
   };
 
   const availableProducts = products.filter(
-    (product) =>
+    (product: Product) =>
       product.campaignId === null || product.id === formData.productId,
   );
 
@@ -104,10 +105,10 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
           fullWidth
           margin="dense"
         >
-          {statuses.map((status, index) => (
-            <MenuItem key={index} value={status}>
-              {status}
-            </MenuItem>
+          {statuses.map((status: string, index: number) => (
+              <MenuItem key={index} value={status}>
+                {status}
+              </MenuItem>
           ))}
         </TextField>
         <TextField
@@ -120,7 +121,7 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
           fullWidth
           margin="dense"
         >
-          {cities.map((city, index) => (
+          {cities.map((city: City, index: number) => (
             <MenuItem key={index} value={city.name}>
               {city.name}
             </MenuItem>
@@ -155,7 +156,7 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
           fullWidth
           margin="dense"
         >
-          {availableProducts.map((product) => (
+          {availableProducts.map((product: Product) => (
             <MenuItem key={product.id} value={product.id}>
               {product.name}
             </MenuItem>

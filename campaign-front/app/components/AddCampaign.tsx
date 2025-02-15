@@ -11,9 +11,10 @@ import {
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useApplicationContext } from "@/app/utils/ApplicationContext";
-import { Field, FormData } from "@/app/interfaces/interfaces";
+import { Field, FormData } from "@/app/interfaces/Interfaces";
 import { useDialogContext } from "@/app/utils/DialogContext";
 import Loading from "@/app/loading";
+import {City, Product} from "@/app/interfaces/ModelInterfaces";
 
 export default function AddCampaign() {
   const {
@@ -41,7 +42,7 @@ export default function AddCampaign() {
   useEffect(() => {
     if (statuses.length && cities.length && products.length) {
       const availableProducts = products.filter(
-        (product) => product.campaignId === null,
+        (product: Product) => product.campaignId === null,
       );
       setFormData({
         name: "",
@@ -122,11 +123,12 @@ export default function AddCampaign() {
           fullWidth
           margin="dense"
         >
-          {statuses.map((status, index) => (
-            <MenuItem key={index} value={status}>
-              {status}
-            </MenuItem>
+          {statuses.map((status: string, index: number) => (
+              <MenuItem key={index} value={status}>
+                {status}
+              </MenuItem>
           ))}
+
         </TextField>
         <TextField
           select
@@ -138,7 +140,7 @@ export default function AddCampaign() {
           fullWidth
           margin="dense"
         >
-          {cities.map((city, index) => (
+          {cities.map((city: City, index: number) => (
             <MenuItem key={index} value={city.name}>
               {city.name}
             </MenuItem>
@@ -174,8 +176,8 @@ export default function AddCampaign() {
           margin="dense"
         >
           {products
-            .filter((product) => product.campaignId === null)
-            .map((product) => (
+            .filter((product: Product) => product.campaignId === null)
+            .map((product: Product) => (
               <MenuItem key={product.id} value={product.id}>
                 {product.name}
               </MenuItem>

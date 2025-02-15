@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { DialogContextType } from "@/app/interfaces/interfaces";
+import {DialogContextType} from "@/app/interfaces/ContextInterfaces";
 
 const DialogContext = createContext<DialogContextType | undefined>(undefined);
 

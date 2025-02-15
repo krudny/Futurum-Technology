@@ -16,7 +16,7 @@ import { useApplicationContext } from "@/app/utils/ApplicationContext";
 import { useDialogContext } from "@/app/utils/DialogContext";
 import EditCampaign from "@/app/components/EditCampaign";
 import React from "react";
-import { Campaign } from "@/app/interfaces/interfaces";
+import {Campaign} from "@/app/interfaces/ModelInterfaces";
 
 export default function CampaignList() {
   const { campaigns, deleteCampaign } = useApplicationContext();
@@ -52,7 +52,7 @@ export default function CampaignList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {campaigns.map((campaign) => (
+                {campaigns.map((campaign: Campaign) => (
                   <TableRow key={campaign.id}>
                     <TableCell>{campaign.name}</TableCell>
                     <TableCell>{campaign.bid}</TableCell>

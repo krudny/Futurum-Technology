@@ -1,12 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {
-  Campaign,
-  ApplicationContextType,
-  FetchDataProps,
-  Product,
-  City,
-} from "@/app/interfaces/interfaces";
 import toast from "react-hot-toast";
+import {ApplicationContextType} from "@/app/interfaces/ContextInterfaces";
+import {Campaign, City, Product} from "@/app/interfaces/ModelInterfaces";
+import {FetchDataProps} from "@/app/interfaces/Interfaces";
 
 const ApplicationContext = createContext<ApplicationContextType | undefined>(
   undefined,
