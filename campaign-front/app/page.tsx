@@ -12,7 +12,7 @@ export default function Home() {
   const { balance } = useApplicationContext();
   const { toggleProductDialog, toggleCampaignDialog } = useDialogContext();
 
-  if (!balance) {
+  if (balance == null) {
     return <Loading />
   }
 
