@@ -6,10 +6,15 @@ import AddCampaign from "@/app/components/AddCampaign";
 import CampaignList from "@/app/components/CampaignList";
 import { useApplicationContext } from "@/app/utils/ApplicationContext";
 import { useDialogContext } from "@/app/utils/DialogContext";
+import Loading from "@/app/loading";
 
 export default function Home() {
   const { balance } = useApplicationContext();
   const { toggleProductDialog, toggleCampaignDialog } = useDialogContext();
+
+  if (!balance) {
+    return <Loading />
+  }
 
   return (
     <div className="container flex flex-col items-center justify-center mx-auto max-w-screen-lg">

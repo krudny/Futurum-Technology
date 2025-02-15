@@ -11,7 +11,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
+      <body className={`w-screen h-screen antialiased`}>
         <DialogProvider>
           <CampaignProvider>
             <Toaster position="top-center" reverseOrder={false} />

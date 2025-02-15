@@ -82,7 +82,7 @@ export default function CampaignList() {
           )}
         </>
       ) : (
-        <h2 className="text-2xl mt-16">No campaigns added</h2>
+        <h2 className="text-2xl mt-16 font-light">No campaigns added</h2>
       )}
     </>
   );
