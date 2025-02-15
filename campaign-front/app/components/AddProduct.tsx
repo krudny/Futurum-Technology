@@ -49,7 +49,7 @@ export default function AddProduct() {
           onChange={(e) => setName(e.target.value)}
         />
       </DialogContent>
-      <DialogActions className="flex justify-center">
+      <DialogActions style={{ justifyContent: "center" }}>
         <Button onClick={toggleProductDialog} variant="outlined" color="error">
           Cancel
         </Button>
