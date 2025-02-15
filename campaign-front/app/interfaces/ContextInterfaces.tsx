@@ -1,5 +1,5 @@
-import {Campaign, City, Product} from "@/app/interfaces/ModelInterfaces";
-import {FetchDataProps} from "@/app/interfaces/Interfaces";
+import { Campaign, City, Product } from "@/app/interfaces/ModelInterfaces";
+import { FetchDataProps } from "@/app/interfaces/Interfaces";
 
 export interface ApplicationContextType {
   campaigns: Campaign[];

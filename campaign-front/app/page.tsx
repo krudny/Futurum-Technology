@@ -13,7 +13,7 @@ export default function Home() {
   const { toggleProductDialog, toggleCampaignDialog } = useDialogContext();
 
   if (balance == null) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
@@ -21,7 +21,7 @@ export default function Home() {
       <div className="flex flex-col items-center gap-y-10 mt-24 mb-8">
         <h1 className="text-4xl font-light md:text-7xl">Campaign Manager</h1>
         <h2 className="text-2xl font-light">
-          Available balance: {" "}
+          Available balance:{" "}
           <span className="text-green-500">{balance} PLN</span>
         </h2>
       </div>

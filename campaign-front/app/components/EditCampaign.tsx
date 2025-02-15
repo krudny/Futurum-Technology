@@ -5,14 +5,15 @@ import {
   TextField,
   DialogActions,
   Button,
-  MenuItem, Autocomplete,
+  MenuItem,
+  Autocomplete,
 } from "@mui/material";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useApplicationContext } from "@/app/utils/ApplicationContext";
 import { Field, FormData } from "@/app/interfaces/Interfaces";
 import { useDialogContext } from "@/app/utils/DialogContext";
-import {Campaign, City, Product} from "@/app/interfaces/ModelInterfaces";
+import { Campaign, City, Product } from "@/app/interfaces/ModelInterfaces";
 
 export default function EditCampaign({ campaign }: { campaign: Campaign }) {
   const {
@@ -22,7 +23,7 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
     cities,
     products,
     statuses,
-      keywords
+    keywords,
   } = useApplicationContext();
   const { editDialog, toggleEditDialog } = useDialogContext();
 
@@ -62,10 +63,10 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
     toast[response.status === 200 ? "success" : "error"](message);
     toggleEditDialog();
     await Promise.all([
-        refreshCampaigns(),
-        refreshBalance(),
-        refreshProducts(),
-    ])
+      refreshCampaigns(),
+      refreshBalance(),
+      refreshProducts(),
+    ]);
   };
 
   const availableProducts = products.filter(
@@ -88,7 +89,7 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
             label={label}
             name={name}
             type={type}
-            value={(formData)[name] || ""}
+            value={formData[name] || ""}
             onChange={handleChange}
             required
             fullWidth
@@ -106,9 +107,9 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
           margin="dense"
         >
           {statuses.map((status: string, index: number) => (
-              <MenuItem key={index} value={status}>
-                {status}
-              </MenuItem>
+            <MenuItem key={index} value={status}>
+              {status}
+            </MenuItem>
           ))}
         </TextField>
         <TextField
@@ -128,21 +129,21 @@ export default function EditCampaign({ campaign }: { campaign: Campaign }) {
           ))}
         </TextField>
         <Autocomplete
-            options={keywords}
-            value={formData.keyword || ""}
-            onChange={(event, newValue) =>
-                setFormData({ ...formData, keyword: newValue || "" })
-            }
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label="Keyword"
-                    variant="outlined"
-                    margin="dense"
-                    fullWidth
-                    required
-                />
-            )}
+          options={keywords}
+          value={formData.keyword || ""}
+          onChange={(event, newValue) =>
+            setFormData({ ...formData, keyword: newValue || "" })
+          }
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Keyword"
+              variant="outlined"
+              margin="dense"
+              fullWidth
+              required
+            />
+          )}
         />
         <TextField
           select
