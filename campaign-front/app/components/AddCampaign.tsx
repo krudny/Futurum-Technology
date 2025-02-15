@@ -71,7 +71,7 @@ export default function AddCampaign() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const response = await fetch("https://campaign-manger-374135600235.us-central1.run.appgit/campaign", {
+    const response = await fetch("https://campaign-manger-374135600235.us-central1.run.app/campaign", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
