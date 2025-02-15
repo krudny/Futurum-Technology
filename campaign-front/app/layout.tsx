@@ -11,8 +11,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
-        <DialogProvider>
+    <head>
+      <link rel="icon" type="image/x-icon" href="hashtag.ico"/>
+      <title>Campaign Manager - Futurum Technology</title>
+    </head>
+    <body className={`antialiased`}>
+    <DialogProvider>
           <CampaignProvider>
             <Toaster position="top-center" reverseOrder={false} />
             {children}

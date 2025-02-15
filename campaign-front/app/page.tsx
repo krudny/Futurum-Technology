@@ -17,7 +17,7 @@ export default function Home() {
   }
 
   return (
-    <div className="container flex flex-col items-center justify-center mx-auto max-w-screen-lg">
+    <div className="container flex flex-col items-center justify-center mx-auto max-w-screen-lg select-none">
       <div className="flex flex-col items-center gap-y-10 mt-24 mb-8">
         <h1 className="text-4xl font-light md:text-7xl">Campaign Manager</h1>
         <h2 className="text-2xl font-light">
