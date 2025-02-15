@@ -191,10 +191,20 @@ export default function AddCampaign() {
           Cancel
         </Button>
         <Button
-          onClick={handleSubmit}
-          type="submit"
-          variant="outlined"
-          color="success"
+            onClick={handleSubmit}
+            type="submit"
+            variant="outlined"
+            color="success"
+            disabled={
+                !formData.name||
+                !formData.bid ||
+                !formData.fund  ||
+                !formData.radius ||
+                !formData.status ||
+                !formData.city ||
+                !formData.keyword ||
+                !formData.productId
+            }
         >
           Add Campaign
         </Button>
