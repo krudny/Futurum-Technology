@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Campaign Manager** is a full-stack application for managing marketing campaigns, products, cities, and user balances with an intuitive interface created for recruitment process applying for junior java developer at Futurum Technology in Cracow. 
+**Campaign Manager** is a full-stack application for managing marketing campaigns, products, cities, and user balances with an intuitive interface created for recruitment process applying for junior java developer at Futurum Technology in Cracow.
 
 ## Live Demo
 
@@ -11,7 +11,6 @@ Project is hosted [here](https://campaign-manager.vercel.app).
 ## Sample view
 
 ![image](https://github.com/user-attachments/assets/c95d0985-e523-4bc7-9257-1ebe8d24d2d6)
-
 
 ## Key Features
 
@@ -24,9 +23,9 @@ Project is hosted [here](https://campaign-manager.vercel.app).
 ## Technologies
 
 - **Backend**: Java, Spring Boot
-- **Frontend**: Next.js, TypeScript, MUI (Material UI)  
-- **Database**: H2 
-- **Development Environment**: IntelliJ IDEA, Visual Studio Code  
+- **Frontend**: Next.js, TypeScript, MUI (Material UI)
+- **Database**: H2
+- **Development Environment**: IntelliJ IDEA, Visual Studio Code
 - **Cloud and deployment**: Docker, Google Cloud Platform
 
 ## Setup
@@ -37,7 +36,7 @@ Clone repository:
 git clone https://github.com/kali095/campaign-manager.git
 ```
 
-## Starting backend 
+## Starting backend
 
 ```bash
 cd futurum-technology/campaign
@@ -62,5 +61,3 @@ npm run dev
 ```
 
 The aplication will be available at http://localhost:3000.
-
-

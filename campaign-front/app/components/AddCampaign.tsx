@@ -6,7 +6,7 @@ import {
   DialogActions,
   Button,
   MenuItem,
- Autocomplete,
+  Autocomplete,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -14,7 +14,7 @@ import { useApplicationContext } from "@/app/utils/ApplicationContext";
 import { Field, FormData } from "@/app/interfaces/Interfaces";
 import { useDialogContext } from "@/app/utils/DialogContext";
 import Loading from "@/app/loading";
-import {City, Product} from "@/app/interfaces/ModelInterfaces";
+import { City, Product } from "@/app/interfaces/ModelInterfaces";
 
 export default function AddCampaign() {
   const {
@@ -24,7 +24,7 @@ export default function AddCampaign() {
     cities,
     products,
     statuses,
-      keywords,
+    keywords,
   } = useApplicationContext();
   const { campaignDialog, toggleCampaignDialog } = useDialogContext();
 
@@ -72,19 +72,22 @@ export default function AddCampaign() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const response = await fetch("https://campaign-manger-374135600235.us-central1.run.app/campaign", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch(
+      "https://campaign-manger-374135600235.us-central1.run.app/campaign",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      },
+    );
     const message = await response.text();
     toast[response.status === 200 ? "success" : "error"](message);
     toggleCampaignDialog();
     await Promise.all([
-        refreshBalance(),
-        refreshProducts(),
-        refreshCampaigns(),
-    ])
+      refreshBalance(),
+      refreshProducts(),
+      refreshCampaigns(),
+    ]);
   };
 
   if (!statuses.length || !cities.length || !products.length) {
@@ -106,7 +109,7 @@ export default function AddCampaign() {
             label={label}
             name={name}
             type={type}
-            value={(formData)[name] || ""}
+            value={formData[name] || ""}
             onChange={handleChange}
             required
             fullWidth
@@ -124,11 +127,10 @@ export default function AddCampaign() {
           margin="dense"
         >
           {statuses.map((status: string, index: number) => (
-              <MenuItem key={index} value={status}>
-                {status}
-              </MenuItem>
+            <MenuItem key={index} value={status}>
+              {status}
+            </MenuItem>
           ))}
-
         </TextField>
         <TextField
           select
@@ -147,21 +149,21 @@ export default function AddCampaign() {
           ))}
         </TextField>
         <Autocomplete
-            options={keywords}
-            value={formData.keyword || ""}
-            onChange={(event, newValue) =>
-                setFormData({ ...formData, keyword: newValue || "" })
-            }
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label="Keyword"
-                    variant="outlined"
-                    margin="dense"
-                    fullWidth
-                    required
-                />
-            )}
+          options={keywords}
+          value={formData.keyword || ""}
+          onChange={(event, newValue) =>
+            setFormData({ ...formData, keyword: newValue || "" })
+          }
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Keyword"
+              variant="outlined"
+              margin="dense"
+              fullWidth
+              required
+            />
+          )}
         />
         <TextField
           select

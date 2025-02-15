@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import {ApplicationContextType} from "@/app/interfaces/ContextInterfaces";
-import {Campaign, City, Product} from "@/app/interfaces/ModelInterfaces";
-import {FetchDataProps} from "@/app/interfaces/Interfaces";
+import { ApplicationContextType } from "@/app/interfaces/ContextInterfaces";
+import { Campaign, City, Product } from "@/app/interfaces/ModelInterfaces";
+import { FetchDataProps } from "@/app/interfaces/Interfaces";
 
 const ApplicationContext = createContext<ApplicationContextType | undefined>(
   undefined,
@@ -22,7 +22,9 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
     error_feedback,
   }: FetchDataProps<T>): Promise<void> {
     try {
-      const response = await fetch(`https://campaign-manger-374135600235.us-central1.run.app/${url}`);
+      const response = await fetch(
+        `https://campaign-manger-374135600235.us-central1.run.app/${url}`,
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -82,15 +84,18 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function deleteCampaign(id: number): Promise<void> {
-    const response = await fetch(`https://campaign-manger-374135600235.us-central1.run.app/campaign/${id}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `https://campaign-manger-374135600235.us-central1.run.app/campaign/${id}`,
+      {
+        method: "DELETE",
+      },
+    );
     const message = await response.text();
     await Promise.all([
-        refreshCampaigns(),
-        refreshProducts(),
-        refreshStatuses(),
-    ])
+      refreshCampaigns(),
+      refreshProducts(),
+      refreshStatuses(),
+    ]);
     toast[response.status === 200 ? "success" : "error"](message);
   }
 
@@ -106,7 +111,7 @@ export function CampaignProvider({ children }: { children: React.ReactNode }) {
       ]);
     }
     loadData();
-  });
+  }, []);
 
   return (
     <ApplicationContext.Provider
